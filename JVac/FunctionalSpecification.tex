@@ -1,0 +1,239 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{blindtext}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage[document]{ragged2e}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+\usepackage{mathspec}
+\else
+\usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+pdfborder={0 0 0},
+breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\title{Specyfikacja funkcjonalna programu JVac}
+\date{}
+
+\begin{document}
+
+    \maketitle
+
+
+    \section{1 ) Cel}
+
+    Celem projektu jest wyznaczenie dziennego optymalnego planu zakupu
+    szczepionek dla zadanej grupy aptek od ich producentów. Producenci
+    szczepionek są w stanie dziennie wyprodukować wyłącznie zadaną ich
+    ilość. Dodatkowo każda apteka zamawiać może szczepionki jedynie po cenie
+    ustalonej indywidualnie z każdym z producentów i w zadanej maksymalnej
+    ich ilości.
+
+
+    \section{2 ) Szczegóły techniczne i wymagania}
+
+    Program napisany został w Javie i wymaga maszyny wirtualnej tegoż języka
+    (zalecana wersja: 11)
+
+
+    \section{3 ) Kompilacja i uruchomienie}
+
+    Przed pierwszym użyciem program powinien zostać skompilowany. W tym celu
+    użytkownik powinien przejść do katalogu \emph{src} i wpisać w wierszu poleceń/konsoli następującą
+    komendę
+
+    \begin{center}
+        \emph{javac JVac.java}
+    \end{center}
+
+    Program może zostać uruchomiony następującą komendą
+
+    \begin{center}
+        \emph{java JVac ŚCIEŻKA\_DO\_PLIKU\_WEJŚCIOWEGO}
+    \end{center}
+
+
+    \section{4 ) Działanie programu}
+
+    Po uruchomieniu programu dalsza ingerencja użytkownika nie jest wymagana.
+    Po skończonym czasie zwracana jest wiadomość podsumowująca jego działanie (pomyślne lub nie).
+
+
+    \section{5 ) Dane wejściowe}
+
+    Program wymaga od użytkownika danych wejściowych zawartych w pliku o
+    następującej postaci:\linebreak
+
+    \# Producenci szczepionek (id \textbar{} nazwa \textbar{} dzienna
+    produkcja)
+
+    0 \textbar{} Nazwa\_producenta1 \textbar{} Dzienna\_produkcja1
+
+    1 \textbar{} Nazwa\_producenta2 \textbar{} Dzienna\_produkcja2
+
+    (\ldots{})
+
+    \# Apteki (id \textbar{} nazwa \textbar{} dzienne zapotrzebowanie)
+
+    0 \textbar{} Nazwa\_apteki1 \textbar{} Dzienne\_zapotrzebowanie1
+
+    1 \textbar{} Nazwa\_apteki2 \textbar{} Dzienne\_zapotrzebowanie2
+
+    (\ldots{})
+
+    \# Połączenia producentów i aptek (id producenta \textbar{} id apteki
+    \textbar{} dzienna maksymalna liczba dostarczanych szczepionek
+    \textbar{} koszt szczepionki {[}zł{]} )
+
+    Id\_producenta1 \textbar{} Id\_apteki1 \textbar{} Dzienne\_szczepionki1
+    \textbar{} Cena\_sztuki1
+
+    Id\_producenta2 \textbar{} Id\_apteki2 \textbar{} Dzienne\_szczepionki2
+    \textbar{} Cena\_sztuki2
+
+    (\ldots{})\linebreak
+
+    Dodatkowo dane powinny spełniać następujące warunki:
+
+    \begin{itemize}
+        \item
+        Nagłówki poszczególnych sekcji powinny mieć zadaną treść tj. włącznie
+        z zawartością pomiędzy nawiasami
+        \item
+        ID aptek i producentów powinny być kolejnymi liczbami naturalnymi
+        \item
+        Dzienna produkcja powinna być liczbą naturalną, mogącą wynosić 0
+        \item
+        Dzienne zapotrzebowanie powinno być liczbą naturalną, mogącą wynosić 0
+        \item
+        Każdy producent powinien mieć połączenie z każdą apteką
+        \item
+        Dzienne szczepionki powinny być liczbą naturalną, mogącą wynosić 0
+        \item
+        Cena sztuki powinna być ułamkiem dziesiętnym, mogącym mieć wartość 0 i
+        mającym maksymalnie 2 miejsca po przecinku
+        \item
+        Kolejne sekcje danych powinny znajdować się w osobnych liniach
+        \item
+        Poszczególne dane powinny być oddzielone znakiem `\textbar{}' --
+        spacje nie są wymagane
+        \item
+        Białe znaki przed i po poszczególnych danych mogą być w dowolnych ilościach.
+        Wiodące i zawodzące białe znaki nie są rozpatrywane przez program
+        \item
+        Nazwy aptek i producentów mogą zawierać spacje
+        \item
+        Kolejność sekcji danych powinna być zgodna z zadanym wzorem
+        \item
+        Nagłówek sekcji danych zawsze rozpoczyna się od pojedynczego `\#'
+        \item
+        Plik musi zawierać wszystkie 3 wymienione nagłówki (mogą być puste)
+        \item
+        Połączenia, nazwy producentów i aptek nie powinny się powtarzać
+        \item
+        Wartości nie powinny mieć podanych jednostek
+        \item
+        Ilość aptek nie powinna przekraczać 1000
+        \item
+        Ilość producentów nie powinna przekraczać 1000
+        \item
+        Dane reprezentujące liczby nie zawierają w sobie żadnych białych znaków. Dla ułamków dziesiętnych separatorem jest '.'
+        \item
+        Dane reprezentujące słowa powinny być podawane w Unikodzie
+    \end{itemize}
+
+
+    \section{6 ) Dane wyjściowe}
+
+    Poprawne działanie programu zakończone jest odpowiednim komunikatem w
+    konsoli oraz generacją pliku wyjściowego o następującym formacie:\linebreak
+
+    Nazwa\_apteki\_X -\textgreater{} Nazwa\_producenta\_X {[}Koszt =
+    Ilość\_X * Cena\_X = Wynik\_X{]}
+
+    Nazwa\_apteki\_Y -\textgreater{} Nazwa\_producenta\_Y {[}Koszt =
+    Ilość\_Y * Cena\_Y = Wynik\_Y{]}
+
+    (\ldots{} Analogicznie dla każdej zaplanowanej transakcji \ldots{})
+
+    Opłaty całkowite: SUMA\_OPŁAT\linebreak
+
+    Plik wygenerowany zostanie w folderze zawierającym pliki programu
+
+
+    \section{7 ) Sytuacje niepożądane}
+
+    W przypadku błędów z kompilacją należy upewnić się, że Java 11 została
+    zainstalowana na urządzeniu. W razie dalszych błędów proszę skontaktować
+    się z autorem programu
+
+    Możliwymi są również błędy w trakcie działania programu. Użytkownik jest
+    o takich sytuacjach informowany odpowiednim komunikatem w konsoli.
+    Poniżej lista potencjalnych powodów ku takiemu zdarzeniu:
+
+    \begin{itemize}
+        \item
+        Podany plik wejściowy nie istnieje, nie może zostać otworzony, jest
+        uszkodzony lub ma błędny format
+        \item
+        Dostarczone programowi dane są zbyt duże lub nie pozwalają na
+        stworzenie jakiegokolwiek planu
+        \item
+        Plik wyjściowy nie mógł zostać utworzony
+    \end{itemize}
+
+    W razie wątpliwości co do przyczyny przerwania pracy programu zachęcam
+    do kontaktu z autorem
+
+    \section{8 ) Skrótowa informacja o wykorzystywanych algorytmach i
+    strukturach danych}
+
+    Program implementuje algorytm sympleksowy z cięciem Gomory'ego --
+    implikuje to również obecność macierzowej struktury danych zawierającej
+    metody przydatne dla tego algorytmu, algorytmu eliminacji Gaussa-Jordana, klasy
+    reprezentującej liczby wymierne wraz z algorytmem Euklidesa do
+    znajdowania wspólnych mianowników
+
+    \begin{flushright}
+        \emph{Maciej Dragun\\*}
+        \emph{298748 WE PW\\*}
+        \emph{01142044@pw.edu.pl\\*}
+    \end{flushright}
+
+\end{document}
+
